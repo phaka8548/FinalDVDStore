@@ -1,112 +1,237 @@
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class DriverDvdStore {
-
-
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException {
-			
+
+//-----------------------------------------------------------------------------------------load list from file		
+
+System.out.println("The list are being loaded...");
+		
 //read dvdlist from a file
 		
-						ObjectInputStream DVDIn = new ObjectInputStream(new FileInputStream("DVDLibrary.dat"));
-						@SuppressWarnings("unchecked")
-						LinkedPositionalList<DvdType> DVDLibrary = (LinkedPositionalList<DvdType>) DVDIn.readObject();
-						System.out.println("The DVD List");
-						printAllDVDs(DVDLibrary);
+	ObjectInputStream DVDIn = new ObjectInputStream(new FileInputStream("DVDLibrary.dat"));
+	@SuppressWarnings("unchecked")
+	LinkedPositionalList<DvdType> DVDLibrary = (LinkedPositionalList<DvdType>) DVDIn.readObject();
+	//System.out.println("The DVD List");
+
 		
 //read customer list from a file
 		
-						ObjectInputStream CustomerIn = new ObjectInputStream(new FileInputStream("CustomerLibrary.dat"));
-						@SuppressWarnings("unchecked")
-						LinkedPositionalList<CustomerType> customerLibrary = (LinkedPositionalList<CustomerType>) CustomerIn.readObject();
-						System.out.println("The Customer List");
-						printAllCustomers(customerLibrary);
+	ObjectInputStream CustomerIn = new ObjectInputStream(new FileInputStream("CustomerLibrary.dat"));
+	@SuppressWarnings("unchecked")
+	LinkedPositionalList<CustomerType> customerLibrary = (LinkedPositionalList<CustomerType>) CustomerIn.readObject();
+	//System.out.println("The Customer List");
+	
 	
 //read checkedout list from the file
 			
-						ObjectInputStream CheckedOutIn = new ObjectInputStream(new FileInputStream("CheckedOutLibrary.dat"));
-						@SuppressWarnings("unchecked")
-						LinkedPositionalList<CheckedOut> CheckedOutLibrary = (LinkedPositionalList<CheckedOut>) CheckedOutIn.readObject();
-						System.out.println("The list of checked out DVDs");
-						printAllRentedDVDs(CheckedOutLibrary);
+	ObjectInputStream CheckedOutIn = new ObjectInputStream(new FileInputStream("CheckedOutLibrary.dat"));
+	@SuppressWarnings("unchecked")
+	LinkedPositionalList<CheckedOut> checkedOutLibrary = (LinkedPositionalList<CheckedOut>) CheckedOutIn.readObject();
+	//System.out.println("The list of checked out DVDs");
 
-//enter the code for the menu system here
-						
-						
-						
+//-----------------------------------------------------------------------------------------end load list from file	
+
+System.out.println("The list have been successfully loaded!");
+
+//----------------------------------------------------------------------------------------Start of the user interface
+/*												
+printAllDVDs(DVDLibrary);					
+printAllCustomers(customerLibrary);						
+printAllRentedDVDs(CheckedOutLibrary);		
+*/
+
+System.out.println("\nChoose function to perform by entering the corresponding number\n" +
+				   "1. Rent a DVD\n" +
+				   "2. Return a DVD\n" +
+				   "3. Print a list of all currently checked out DVDs\n" +
+				   "4. Print a list of Customers\n" +
+				   "5. Show which DVDs a specific customer has checked out\n" +
+				   "6. Show the details of a specific customer\n" +
+				   "7. Print a list of all the DVDs in the store\n" +
+				   "8. Show the details of a specific DVD\n" +
+				   "9. Show whether a specific DVD is availible\n" +
+				   "10. Remove a DVD from the database\n" +
+				   "Coming Soon: Add a DVD to the database, Add a Customer to the Database\n" +
+				   "11. exit\n"
+					);
+
+Scanner input = new Scanner(System.in);
+
+
+int selection = 0;
+String name = null;
+String title = null;
+while (selection != 11)
+{
+	System.out.print("Enter your selection here: ");
+	System.out.println();
+	selection = Integer.parseInt(input.nextLine());
+	switch (selection)
+	{
+		case(1):
+		{	
+			System.out.println("You have selected rent a DVD");
+			System.out.print("Enter the name of the customer here: ");
+			name = input.nextLine();
+			System.out.println();
+			System.out.print("Enter the title of the DVD here: ");
+			title = input.nextLine();
+			System.out.println();
 			
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-//end the menu system here
-						
-						
-
-							
-//write a checked out list from the file
-				try 
-					{
-						ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("CheckedOutLibrary.dat"));
-						out.writeObject(CheckedOutLibrary);
-						out.close();
-						System.out.println("CheckedOutLibrary saved to file correctly");
-					} 
-				catch (IOException e) 
-					{
-						System.err.println("Err! IOException: " + e.getMessage());
-					}
-								
-//write dvdlist to a file
-				try 
-					{
-						ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("DVDLibrary.dat"));
-						out.writeObject(DVDLibrary);
-						out.close();
-						System.out.println("DVDLibrary Data saved to file correctly");
-					} 
-				catch (IOException e) 
-					{
-						System.err.println("Err! IOException: " + e.getMessage());
-					}
-				
-//write customerlist to a file
-				try 
-					{
-						ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("CustomerLibrary.dat"));
-						out.writeObject(customerLibrary);
-						out.close();
-						System.out.println("CustomerLibrary saved to file correctly");
-					} 
-				catch (IOException e) 
-					{
-						System.err.println("Err! IOException: " + e.getMessage());
-					}				
-				
+			rentDVD(name, title, DVDLibrary, customerLibrary, checkedOutLibrary);
+			break;
+		}
+		case(2):
+		{
+			System.out.println("You have selected return a DVD");
+			System.out.print("Enter the name of the customer here: ");
+			name = input.nextLine();
+			System.out.println();
+			System.out.print("Enter the title of the DVD here: ");
+			title = input.nextLine();
+			System.out.println();
+			
+			returnDVD(name, title, DVDLibrary, customerLibrary, checkedOutLibrary);
+			break;
+		}
+		case(3):
+		{
+			printAllRentedDVDs(checkedOutLibrary);
+			break;
+		
+		}
+		case(4):
+		{
+			printAllCustomers(customerLibrary);
+			break;
+		}
+		case(5):
+		{
+			System.out.println("You have selected to show the DVDs a specific customer has checked out");
+			System.out.print("Enter the name of the customer here: ");
+			name = input.nextLine();
+			System.out.println();
+			showCustomersCheckedOut(name, customerLibrary, checkedOutLibrary);
+			break;
+		}
+		case(6):
+		{
+			System.out.println("You have selected to show the details of a specific customer");
+			System.out.print("Enter the name of the customer here: ");
+			name = input.nextLine();
+			System.out.println();
+			System.out.println(showCustomer(name, customerLibrary));
+			break;
+		}
+		case(7):
+		{
+			printAllDVDs(DVDLibrary);
+			break;
+		}
+		case(8):
+		{
+			System.out.println("You have selected to show the details of a DVD");
+			System.out.print("Enter the title of the DVD here: ");
+			title = input.nextLine();
+			System.out.println();
+			
+			System.out.println(showDVD(title, DVDLibrary));
+			break;
+		}
+		case(9):
+		{
+			System.out.println("You have selected to check if a DVD is availible");
+			System.out.print("Enter the title of the DVD here: ");
+			title = input.nextLine();
+			System.out.println();
+			
+			if (checkDVD(title, DVDLibrary))
+				System.out.println(title + " is availible");
+			else
+				System.out.println(title + " isn't availible");
+			
+			break;
+		}
+		case(10):
+		{
+			System.out.println("You have selected to remove a DVD from the stores Library");
+			System.out.print("Enter the title of the DVD here: ");
+			title = input.nextLine();
+			System.out.println();
+			
+			removeDVD(title, DVDLibrary);
+			break;
+		}
+		case(11):
+		{
+			break;
+		}
 						
 	}
+	
+	input.close();
+}
+
+			
+//------------------------------------------------------------------------------------------End of the user interface
+System.out.println();							
+System.out.println("The program has ended, the list are being saved...");			
+//-------------------------------------------------------------------------------------------write list to file
+							
+//write a checked out list from the file
+	try 
+		{
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("CheckedOutLibrary.dat"));
+			out.writeObject(checkedOutLibrary);
+			out.close();
+			System.out.println("CheckedOutLibrary saved to file correctly!");
+		} 
+	catch (IOException e) 
+		{
+			System.err.println("Err! IOException: " + e.getMessage());
+		}
+								
+//write dvdlist to a file
+	try 
+		{
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("DVDLibrary.dat"));
+			out.writeObject(DVDLibrary);
+			out.close();
+			System.out.println("DVDLibrary Data saved to file correctly!");
+		} 
+	catch (IOException e) 
+		{
+			System.err.println("Err! IOException: " + e.getMessage());
+		}
+				
+//write customerlist to a file
+	try 
+		{
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("CustomerLibrary.dat"));
+			out.writeObject(customerLibrary);
+			out.close();
+			System.out.println("CustomerLibrary saved to file correctly!");
+		} 
+	catch (IOException e) 
+		{
+			System.err.println("Err! IOException: " + e.getMessage());
+		}				
+				
+						
+	} //-------------------------------------------------------------------------------------------------end of the main
 	
 	
 //search methods
@@ -496,80 +621,7 @@ public class DriverDvdStore {
 	System.out.println();
 	}
 	
-	
-	
-//Saving DVD to a file using Object Serialization--------------------
-	/**
-	* Create a file
-		* @throws IOException 
-	*/
-	public static ObjectOutputStream createDVDOutputFile(String fileName) throws IOException
-		{
-			ObjectOutputStream DVDOutFile = new ObjectOutputStream(new FileOutputStream(fileName)); //writes a data file
-			return DVDOutFile;
-		}
 		
-	/**
-	 * @param DVDType that implements serializable
-	 * This method writes a stream of a serialized task object into a file
-		*/
-	public static void saveDVDToFile(DvdType DVD1, ObjectOutputStream out) //pass in the objectOutputStream
-		{
-			try {
-				out.writeObject(DVD1);						//an object can write itself to a stream of bytes using ObjectOutputStream 
-				System.out.println("Data was saved to file correctly");
-			} catch (IOException e) {
-				System.err.println("Caught IOException: " + e.getMessage());
-			}
-		}
-		
-	/** 
-	 * @param DVDlibrary a positional list that holds all the DVDs
-	 * Writes all the DVDs to a file using serialization
-	 * @throws IOException 
-	 */
-	public static void saveDVDListToFile(LinkedPositionalList<DvdType> DVDlibrary, String fileName) throws IOException
-		{
-			Position<DvdType> DVDiterator = DVDlibrary.first();			//Set initial position to point to first position (node) in array
-			ObjectOutputStream DVDOut = createDVDOutputFile(fileName);			//create one output file for the entire list
-			while (DVDiterator != null) 
-			{ 
-				saveDVDToFile(DVDiterator.getElement(), DVDOut);		//save each individual DVD from list to file
-				//go to next element
-				DVDiterator = DVDlibrary.after(DVDiterator);			//make iterator the next position 
-			 }
-			DVDOut.close();		//after putting all the objects in the list, close the file
-		}
-		
-//Saving a DVD from a text file using serialization---------------------
-	/**
-	* Create a file
-    * @throws IOException 
-	*/
-	public static ObjectInputStream createDVDInputFile(String fileName) throws IOException
-		{
-			ObjectInputStream DVDInFile = new ObjectInputStream(new FileInputStream(fileName)); //writes a data file
-			return DVDInFile;
-		}
-		
-		
-//add to an existing positional list
-	/**
-	 * @throws IOException 
-	 * 
-	 */
-		@SuppressWarnings("unchecked")
-	public static LinkedPositionalList<DvdType> readDVDListFromFile(String fileName) throws IOException, ClassNotFoundException
-		{
-			try {
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-				LinkedPositionalList<DvdType> newDVDList = (LinkedPositionalList<DvdType>) in.readObject();
-				return newDVDList;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-	
 }
+
+
