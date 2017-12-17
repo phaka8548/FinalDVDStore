@@ -46,6 +46,9 @@ public class CheckedOut implements Serializable{
 		DVDs = dVDs;
 	}
 
+	public int getLastIndex() {
+		return lastIndex;
+	}
 	//functional methods
 	
 	
@@ -74,20 +77,19 @@ public class CheckedOut implements Serializable{
 	public void removeDVD(DvdType DVD)
 	{
 		int nullSpot = 0;
-		
 		for (int lcv = 0; lcv < DVDs.length; lcv++)
 		{
 			if(this.DVDs[lcv].equals(DVD))			
 				{
-				 this.DVDs[lcv] = null;
-				 nullSpot = lcv;
+				 this.DVDs[lcv] = null; //setting to null is removing object for garbage
+				 nullSpot = lcv; //new null spot
 				 break;
 				}
-			
 		}
-			DVDs[nullSpot] = DVDs[lastIndex];
+			DVDs[nullSpot] = DVDs[lastIndex]; //sorts the array
+			DVDs[lastIndex] = null;
 			lastIndex--;
-		
+			//System.out.println(lastIndex);
 	}
 	
 	

@@ -4,14 +4,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 public class DriverDvdStore {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException {
-
+		
+		
+		
 //-----------------------------------------------------------------------------------------load list from file		
 
 System.out.println("The list are being loaded...");
@@ -41,9 +46,14 @@ System.out.println("The list are being loaded...");
 
 //-----------------------------------------------------------------------------------------end load list from file	
 
-System.out.println("The lists have been successfully loaded!");
+System.out.println("The list have been successfully loaded!");
 
 //----------------------------------------------------------------------------------------Start of the user interface
+												
+printAllDVDs(DVDLibrary);					
+printAllCustomers(customerLibrary);						
+printAllRentedDVDs(checkedOutLibrary);		
+
 
 System.out.println("\nChoose function to perform by entering the corresponding number\n" +
 				   "1. Rent a DVD\n" +
@@ -62,10 +72,10 @@ System.out.println("\nChoose function to perform by entering the corresponding n
 
 Scanner input = new Scanner(System.in);
 
+
 int selection = 0;
 String name = null;
 String title = null;
-
 while (selection != 11)
 {
 	System.out.print("Enter your selection here: ");
@@ -103,6 +113,7 @@ while (selection != 11)
 		{
 			printAllRentedDVDs(checkedOutLibrary);
 			break;
+		
 		}
 		case(4):
 		{
@@ -163,22 +174,26 @@ while (selection != 11)
 			title = input.nextLine();
 			System.out.println();
 			
-			removeDVD(title, DVDLibrary);
+			System.out.println(removeDVD(title, DVDLibrary));
 			break;
 		}
 		case(11):
 		{
 			break;
-		}					
-	}	
+		}
+						
+	}
+	
+	
 }
-		
+
+			
 //------------------------------------------------------------------------------------------End of the user interface
 System.out.println();							
 System.out.println("The program has ended, the list are being saved...");			
 //-------------------------------------------------------------------------------------------write list to file
 							
-//write the checkedout list from the file
+//write a checked out list from the file
 	try 
 		{
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("CheckedOutLibrary.dat"));
@@ -217,9 +232,10 @@ System.out.println("The program has ended, the list are being saved...");
 			System.err.println("Err! IOException: " + e.getMessage());
 		}				
 				
-	input.close();					
-	} //-------------------------------------------------------------------------------------------------end of the main
+	input.close();	//*/				
+	} 	//-------------------------------------------------------------------------------------------------end of the main
 	
+
 //search methods
 	
 	/**
@@ -388,12 +404,12 @@ System.out.println("The program has ended, the list are being saved...");
 			if (!checkCustomer(name, Customerlibrary))
 					return name + " isn't a customer.";
 			
-				Position<CustomerType> CustomerPosition = searchForCustomer(name, Customerlibrary);
+			Position<CustomerType> CustomerPosition = searchForCustomer(name, Customerlibrary);
 				
-					if (checkCheckedOut(CustomerPosition.getElement(), tempCheck))
-						return showCheckedOut(CustomerPosition.getElement(), tempCheck);
-					else
-						return name + " hasn't checked anything out";
+			if (checkCheckedOut(CustomerPosition.getElement(), tempCheck))
+					return showCheckedOut(CustomerPosition.getElement(), tempCheck);
+			else
+					return name + " hasn't checked anything out";
 		}
 			
 //print list methods
@@ -575,6 +591,7 @@ System.out.println("The program has ended, the list are being saved...");
 	 */
 	public static void returnDVD(String name, String title, LinkedPositionalList<DvdType> DVDlibrary, LinkedPositionalList<CustomerType> customerLibrary, LinkedPositionalList<CheckedOut> checkedOutLibrary)
 	{
+		
 		if (checkDVD(title, DVDlibrary) && checkCustomer(name, customerLibrary))
 		{
 			Position<DvdType> x = searchForDVD(title, DVDlibrary);
@@ -586,11 +603,10 @@ System.out.println("The program has ended, the list are being saved...");
 						Position<CheckedOut> z = searchForCheckedOut(y.getElement(), checkedOutLibrary);
 						z.getElement().removeDVD(x.getElement());
 						
-						
 						if (z.getElement().isEmpty())
 						{
 							checkedOutLibrary.remove(z);
-							x.getElement().checkIn();
+							x.getElement().checkIn(); //DVD increments # of copies
 							System.out.println(name + " has no more DVDs after returning " + title);
 						} else {
 							x.getElement().checkIn();
@@ -609,3 +625,5 @@ System.out.println("The program has ended, the list are being saved...");
 	
 		
 }
+
+
