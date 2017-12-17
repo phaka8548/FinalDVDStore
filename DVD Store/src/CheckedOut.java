@@ -13,39 +13,53 @@ public class CheckedOut implements Serializable{
 	private int lastIndex = -1;
 
 	//constructors
-	
+	/**
+	 * @param customer
+	 */
 	public CheckedOut(CustomerType customer) {
 		super();
 		this.customer = customer;
 	}
-
+	
 	public CheckedOut() {}
 	
 	//tostring
-	
+
 	@Override
 	public String toString() {
 		return "Name: " + customer.getFullName() + "\nAccount Number: " + customer.getAccountNumber() + "\nRented DVDs" + printRentedDVDs();
 	}
 	
 	//setters and getters
-	
+	/** 
+	 * @return customer
+	 */
 	public CustomerType getCustomer() {
 		return customer;
 	}
-
+	/**
+	 * set customer
+	 * @param customer
+	 */
 	public void setCustomer(CustomerType customer) {
 		this.customer = customer;
 	}
-
+	/**
+	 * @return dvd array
+	 */
 	public DvdType[] getDVDs() {
 		return DVDs;
 	}
-
+	/**
+	 * set dvd array
+	 * @param dVDs
+	 */
 	public void setDVDs(DvdType[] dVDs) {
 		DVDs = dVDs;
 	}
-
+	/**
+	 * @return the last index of array
+	 */
 	public int getLastIndex() {
 		return lastIndex;
 	}
@@ -92,7 +106,9 @@ public class CheckedOut implements Serializable{
 			//System.out.println(lastIndex);
 	}
 	
-	
+	/**
+	 * @return ture if the dvd array is empty, else return false
+	 */
 	public boolean isEmpty()
 	{
 		if (this.getDVDs()[0] == null)
@@ -100,7 +116,9 @@ public class CheckedOut implements Serializable{
 		return false;
 	}
 
-
+	/**
+	 * @return true if array is full, else return false
+	 */
 	public boolean isFull()
 	{
 		if (!(this.getDVDs()[4] == null))
@@ -109,6 +127,9 @@ public class CheckedOut implements Serializable{
 	}
 	
 	//Print a list of their rented DVDs
+	/**
+	 * @return the printed list of rented dvd titles
+	 */
 	public String printRentedDVDs()
 	{
 		String rentedDVDTitles = "";
