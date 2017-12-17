@@ -77,9 +77,9 @@ public class CheckedOut implements Serializable{
 		
 		for (int lcv = 0; lcv < DVDs.length; lcv++)
 		{
-			if(DVDs[lcv] == DVD)			
+			if(this.DVDs[lcv].equals(DVD))			
 				{
-				 DVDs[lcv] = null;
+				 this.DVDs[lcv] = null;
 				 nullSpot = lcv;
 				 break;
 				}
