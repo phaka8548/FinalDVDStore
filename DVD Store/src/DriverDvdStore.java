@@ -182,7 +182,7 @@ while (selection != 11)
 						
 	}
 	
-	input.close();
+	
 }
 
 			
@@ -230,7 +230,7 @@ System.out.println("The program has ended, the list are being saved...");
 			System.err.println("Err! IOException: " + e.getMessage());
 		}				
 				
-						
+	input.close();					
 	} //-------------------------------------------------------------------------------------------------end of the main
 	
 	

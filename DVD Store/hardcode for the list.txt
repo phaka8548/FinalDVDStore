@@ -1,0 +1,43 @@
+		LinkedPositionalList<DvdType> DVDList = new LinkedPositionalList<>();
+		
+		String[] starsA = new String[] {"Ryan Gosling", "Rachel McAdams"};				
+		DvdType a = new DvdType("The Notebook", starsA, "Mark Johnson", "Nick Cassavetes", "New Line Cinema", 10);
+
+		String[] starsB = new String[] {"Kumail Nanjiani", "Zoe Kazan"};
+		DvdType b = new DvdType("The Big Sick", starsB, "Judd Apatow", "Michael Showalter", "Apatow Production", 10);
+		
+		String[] starsC = new String[] {"Adam Sandler", "Drew Barrymore"};	
+		DvdType c = new DvdType("The Wedding Singer", starsC, "Jack Giarraputow", "Frank Croaci", "New Line Cinema", 10);
+		
+		String[] starsD = new String[] {"Arnold Schwarzenegger", "Linda Hamilton", "Michael Biehn"};	
+		DvdType d = new DvdType("The Terminator", starsD, "Gale Ann Hurd", "James Cameron", "Hemdale Film Corporation", 10);
+		
+		
+		
+	
+		DVDList.addFirst(a);
+		DVDList.addFirst(b);
+		DVDList.addFirst(c);
+		DVDList.addFirst(d);
+
+
+
+
+				
+		LinkedPositionalList<CustomerType> CustomerList = new LinkedPositionalList<>();
+		
+		CustomerType joey = new CustomerType("Joey Jo", CustomerType.getNumCustomers() , "JoeyJo@email.com");
+		CustomerType josh = new CustomerType("Josh Smith", CustomerType.getNumCustomers() , "JoshSmith@email.com");
+		CustomerType jess = new CustomerType("Jess Cooper", CustomerType.getNumCustomers(), "JessCooper@email.com");
+		CustomerType jill = new CustomerType("Jill Banks", CustomerType.getNumCustomers(), "JillBanks@email.com");
+		CustomerType carl = new CustomerType("Carl Clam", CustomerType.getNumCustomers(), "ClamMan@email.com");
+					
+					
+		
+							
+					
+		CustomerList.addFirst(joey);
+		CustomerList.addFirst(josh);
+		CustomerList.addFirst(jess);
+		CustomerList.addFirst(jill);
+		CustomerList.addFirst(carl);

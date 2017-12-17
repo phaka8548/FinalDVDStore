@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 //Superclass to Customer Type
+@SuppressWarnings("serial")
 public class Person implements Serializable{
 
 	String fullName;
