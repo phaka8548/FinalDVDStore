@@ -83,6 +83,7 @@ public class CheckedOut implements Serializable{
 				 nullSpot = lcv;
 				 break;
 				}
+			
 		}
 			DVDs[nullSpot] = DVDs[lastIndex];
 			lastIndex--;

@@ -4,11 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import javax.swing.JOptionPane;
 
 public class DriverDvdStore {
 
@@ -44,14 +41,9 @@ System.out.println("The list are being loaded...");
 
 //-----------------------------------------------------------------------------------------end load list from file	
 
-System.out.println("The list have been successfully loaded!");
+System.out.println("The lists have been successfully loaded!");
 
 //----------------------------------------------------------------------------------------Start of the user interface
-/*												
-printAllDVDs(DVDLibrary);					
-printAllCustomers(customerLibrary);						
-printAllRentedDVDs(CheckedOutLibrary);		
-*/
 
 System.out.println("\nChoose function to perform by entering the corresponding number\n" +
 				   "1. Rent a DVD\n" +
@@ -70,10 +62,10 @@ System.out.println("\nChoose function to perform by entering the corresponding n
 
 Scanner input = new Scanner(System.in);
 
-
 int selection = 0;
 String name = null;
 String title = null;
+
 while (selection != 11)
 {
 	System.out.print("Enter your selection here: ");
@@ -111,7 +103,6 @@ while (selection != 11)
 		{
 			printAllRentedDVDs(checkedOutLibrary);
 			break;
-		
 		}
 		case(4):
 		{
@@ -124,7 +115,7 @@ while (selection != 11)
 			System.out.print("Enter the name of the customer here: ");
 			name = input.nextLine();
 			System.out.println();
-			showCustomersCheckedOut(name, customerLibrary, checkedOutLibrary);
+			System.out.println(showCustomersCheckedOut(name, customerLibrary, checkedOutLibrary));
 			break;
 		}
 		case(6):
@@ -178,20 +169,16 @@ while (selection != 11)
 		case(11):
 		{
 			break;
-		}
-						
-	}
-	
-	
+		}					
+	}	
 }
-
-			
+		
 //------------------------------------------------------------------------------------------End of the user interface
 System.out.println();							
 System.out.println("The program has ended, the list are being saved...");			
 //-------------------------------------------------------------------------------------------write list to file
 							
-//write a checked out list from the file
+//write the checkedout list from the file
 	try 
 		{
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("CheckedOutLibrary.dat"));
@@ -232,7 +219,6 @@ System.out.println("The program has ended, the list are being saved...");
 				
 	input.close();					
 	} //-------------------------------------------------------------------------------------------------end of the main
-	
 	
 //search methods
 	
@@ -623,5 +609,3 @@ System.out.println("The program has ended, the list are being saved...");
 	
 		
 }
-
-

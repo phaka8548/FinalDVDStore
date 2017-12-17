@@ -108,12 +108,12 @@ public class DvdType implements Serializable{
 		copies++;
 	}
 	
-	public boolean dvdAvailible(DvdType dvd) {
+	public boolean dvdAvailible(DvdType dvd) 
+	{
 		boolean availible = true; 
 		if (copies == 0)
 			availible = false;
 		
 		return availible;	
 	}
-
 }

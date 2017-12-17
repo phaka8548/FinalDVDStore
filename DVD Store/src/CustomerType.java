@@ -25,15 +25,15 @@ public class CustomerType extends Person implements Serializable{
 		numCustomers++;
 	}
 	
-
-	//tostring
 	
 	public CustomerType(String fullName) {
 		super(fullName);
 		// TODO Auto-generated constructor stub
 	}
 
-
+	//tostring
+	
+	
 	@Override
 	/**
 	 * Override to string to print Customer information
